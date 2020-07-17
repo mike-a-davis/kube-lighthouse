@@ -1,0 +1,230 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: middlemanager
+  name: middlemanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: middlemanager
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: middlemanager
+    spec:
+      initContainers:
+        - name: volume-mount-hack
+          securityContext:
+            runAsUser: 0
+          image: busybox
+          command: ['sh', '-c', '/bin/chown -R 1000:1000 /hack']
+          volumeMounts:
+          - name: middlemanager-var
+            mountPath: /hack
+      containers:
+      - args:
+        - middleManager
+        env:
+        - name: DRUID_LOG4J
+          valueFrom:
+            configMapKeyRef:
+              key: DRUID_LOG4J
+              name: druid-env
+        - name: DRUID_MAXDIRECTMEMORYSIZE
+          valueFrom:
+            configMapKeyRef:
+              key: DRUID_MAXDIRECTMEMORYSIZE
+              name: druid-env
+        - name: DRUID_MAXNEWSIZE
+          valueFrom:
+            configMapKeyRef:
+              key: DRUID_MAXNEWSIZE
+              name: druid-env
+        - name: DRUID_NEWSIZE
+          valueFrom:
+            configMapKeyRef:
+              key: DRUID_NEWSIZE
+              name: druid-env
+        - name: DRUID_XMS
+          valueFrom:
+            configMapKeyRef:
+              key: DRUID_XMS
+              name: druid-env
+        - name: DRUID_XMX
+          valueFrom:
+            configMapKeyRef:
+              key: DRUID_XMX
+              name: druid-env
+        - name: druid_coordinator_balancer_strategy
+          valueFrom:
+            configMapKeyRef:
+              key: druid_coordinator_balancer_strategy
+              name: druid-env
+        - name: druid_emitter
+          valueFrom:
+            configMapKeyRef:
+              key: druid_emitter
+              name: druid-env
+        - name: druid_emitter_kafka_alert_topic
+          valueFrom:
+            configMapKeyRef:
+              key: druid_emitter_kafka_alert_topic
+              name: druid-env
+        - name: druid_emitter_kafka_bootstrap_servers
+          valueFrom:
+            configMapKeyRef:
+              key: druid_emitter_kafka_bootstrap_servers
+              name: druid-env
+        - name: druid_emitter_kafka_metric_topic
+          valueFrom:
+            configMapKeyRef:
+              key: druid_emitter_kafka_metric_topic
+              name: druid-env
+        - name: druid_emitter_kafka_producer_config
+          valueFrom:
+            configMapKeyRef:
+              key: druid_emitter_kafka_producer_config
+              name: druid-env
+        - name: druid_emitter_logging_logLevel
+          valueFrom:
+            configMapKeyRef:
+              key: druid_emitter_logging_logLevel
+              name: druid-env
+        - name: druid_extensions_loadList
+          valueFrom:
+            configMapKeyRef:
+              key: druid_extensions_loadList
+              name: druid-env
+        - name: druid_indexer_fork_property_druid_processing_buffer_sizeBytes
+          valueFrom:
+            configMapKeyRef:
+              key: druid_indexer_fork_property_druid_processing_buffer_sizeBytes
+              name: druid-env
+        - name: druid_indexer_runner_javaOptsArray
+          valueFrom:
+            configMapKeyRef:
+              key: druid_indexer_runner_javaOptsArray
+              name: druid-env
+        - name: druid_javascript_enabled
+          valueFrom:
+            configMapKeyRef:
+              key: druid_javascript_enabled
+              name: druid-env
+        - name: druid_metadata_storage_connector_connectURI
+          valueFrom:
+            configMapKeyRef:
+              key: druid_metadata_storage_connector_connectURI
+              name: druid-env
+        - name: druid_metadata_storage_connector_password
+          valueFrom:
+            configMapKeyRef:
+              key: druid_metadata_storage_connector_password
+              name: druid-env
+        - name: druid_metadata_storage_connector_user
+          valueFrom:
+            configMapKeyRef:
+              key: druid_metadata_storage_connector_user
+              name: druid-env
+        - name: druid_metadata_storage_host
+          valueFrom:
+            configMapKeyRef:
+              key: druid_metadata_storage_host
+              name: druid-env
+        - name: druid_metadata_storage_type
+          valueFrom:
+            configMapKeyRef:
+              key: druid_metadata_storage_type
+              name: druid-env
+        - name: druid_processing_numMergeBuffers
+          valueFrom:
+            configMapKeyRef:
+              key: druid_processing_numMergeBuffers
+              name: druid-env
+        - name: druid_processing_numThreads
+          valueFrom:
+            configMapKeyRef:
+              key: druid_processing_numThreads
+              name: druid-env
+        - name: druid_s3_accessKey
+          valueFrom:
+            configMapKeyRef:
+              key: druid_s3_accessKey
+              name: druid-env
+        - name: druid_s3_disableChunkedEncoding
+          valueFrom:
+            configMapKeyRef:
+              key: druid_s3_disableChunkedEncoding
+              name: druid-env
+        - name: druid_s3_enablePathStyleAccess
+          valueFrom:
+            configMapKeyRef:
+              key: druid_s3_enablePathStyleAccess
+              name: druid-env
+        - name: druid_s3_endpoint_url
+          valueFrom:
+            configMapKeyRef:
+              key: druid_s3_endpoint_url
+              name: druid-env
+        - name: druid_s3_forceGlobalBucketAccessEnabled
+          valueFrom:
+            configMapKeyRef:
+              key: druid_s3_forceGlobalBucketAccessEnabled
+              name: druid-env
+        - name: druid_s3_protocol
+          valueFrom:
+            configMapKeyRef:
+              key: druid_s3_protocol
+              name: druid-env
+        - name: druid_s3_secretKey
+          valueFrom:
+            configMapKeyRef:
+              key: druid_s3_secretKey
+              name: druid-env
+        - name: druid_storage_baseKey
+          valueFrom:
+            configMapKeyRef:
+              key: druid_storage_baseKey
+              name: druid-env
+        - name: druid_storage_bucket
+          valueFrom:
+            configMapKeyRef:
+              key: druid_storage_bucket
+              name: druid-env
+        - name: druid_storage_disableAcl
+          valueFrom:
+            configMapKeyRef:
+              key: druid_storage_disableAcl
+              name: druid-env
+        - name: druid_storage_type
+          valueFrom:
+            configMapKeyRef:
+              key: druid_storage_type
+              name: druid-env
+        - name: druid_zk_service_host
+          valueFrom:
+            configMapKeyRef:
+              key: druid_zk_service_host
+              name: druid-env
+        image: apache/druid:0.17.0
+        name: middlemanager
+        ports:
+        - containerPort: 8081
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/data
+          name: middlemanager-data
+        - mountPath: /opt/druid/var
+          name: middlemanager-var
+      restartPolicy: Always
+      volumes:
+      - name: middlemanager-data
+        persistentVolumeClaim:
+          claimName: middlemanager-data
+      - name: middlemanager-var
+        persistentVolumeClaim:
+          claimName: middlemanager-var
+

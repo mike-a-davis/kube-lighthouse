@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: broker-druid-env
+  name: druid-env
+data:
+  DRUID_LOG4J: <?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console
+    name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t]
+    %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root><Logger
+    name="org.apache.druid.jetty.RequestLog" additivity="false" level="DEBUG"><AppenderRef
+    ref="Console"/></Logger></Loggers></Configuration>
+  DRUID_MAXDIRECTMEMORYSIZE: 5120m
+  DRUID_MAXNEWSIZE: 250m
+  DRUID_NEWSIZE: 250m
+  DRUID_XMS: 1g
+  DRUID_XMX: 1g
+  druid_coordinator_balancer_strategy: cachingCost
+  druid_emitter: kafka
+  druid_emitter_kafka_alert_topic: druid_alerts
+  druid_emitter_kafka_bootstrap_servers: kafka-service:9092
+  druid_emitter_kafka_metric_topic: druid_metrics
+  druid_emitter_kafka_producer_config: '{"max.block.ms":10000}'
+  druid_emitter_logging_logLevel: debug
+  druid_extensions_loadList: '["druid-histogram", "druid-datasketches", "druid-lookups-cached-global",
+    "postgresql-metadata-storage", "druid-kafka-indexing-service", "kafka-emitter",
+    "druid-s3-extensions"]'
+  druid_indexer_fork_property_druid_processing_buffer_sizeBytes: "268435456"
+  druid_indexer_runner_javaOptsArray: '["-server", "-Xmx4g", "-Xms1g", "-XX:MaxDirectMemorySize=6g",
+    "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]'
+  druid_javascript_enabled: "true"
+  druid_metadata_storage_connector_connectURI: jdbc:postgresql://postgres-service:5432/druid
+  druid_metadata_storage_connector_password: FoolishPassword
+  druid_metadata_storage_connector_user: druid
+  druid_metadata_storage_host: postgres-service
+  druid_metadata_storage_type: postgresql
+  druid_processing_numMergeBuffers: "4"
+  druid_processing_numThreads: "4"
+  druid_s3_accessKey: minio
+  druid_s3_disableChunkedEncoding: "true"
+  druid_s3_enablePathStyleAccess: "true"
+  druid_s3_endpoint_url: minio-service:9000
+  druid_s3_forceGlobalBucketAccessEnabled: "false"
+  druid_s3_protocol: http
+  druid_s3_secretKey: minio123
+  druid_storage_baseKey: druid/segments
+  druid_storage_bucket: druid
+  druid_storage_disableAcl: "true"
+  druid_storage_type: s3
+  druid_zk_service_host: zookeeper-service
+

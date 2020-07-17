@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  MB_DB_DBNAME: druid
+  MB_DB_HOST: postgres-service
+  MB_DB_PASS: FoolishPassword
+  MB_DB_PORT: "5432"
+  MB_DB_TYPE: postgres
+  MB_DB_USER: druid
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    app: metabase-metabase-env
+  name: metabase-env

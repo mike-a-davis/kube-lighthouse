@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: minio-pv
+  labels:
+    component: minio
+    function: data
+spec:
+  storageClassName: minio-data
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data/minio1"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  # This name uniquely identifies the PVC. This is used in deployment.
+  name: minio-pv-claim
+  labels:
+    component: minio
+    function: data
+spec:
+  storageClassName: minio-data
+  # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
+  accessModes:
+    # The volume is mounted as read-write by a single node
+    - ReadWriteMany
+  resources:
+    # This is the request for storage. Should be available in the cluster.
+    requests:
+      storage: 1Gi

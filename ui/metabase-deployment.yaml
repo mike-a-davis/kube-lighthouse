@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: metabase
+  name: metabase
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metabase
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: metabase
+    spec:
+      containers:
+      - env:
+        - name: MB_DB_DBNAME
+          valueFrom:
+            configMapKeyRef:
+              key: MB_DB_DBNAME
+              name: metabase-env
+        - name: MB_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MB_DB_HOST
+              name: metabase-env
+        - name: MB_DB_PASS
+          valueFrom:
+            configMapKeyRef:
+              key: MB_DB_PASS
+              name: metabase-env
+        - name: MB_DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: MB_DB_PORT
+              name: metabase-env
+        - name: MB_DB_TYPE
+          valueFrom:
+            configMapKeyRef:
+              key: MB_DB_TYPE
+              name: metabase-env
+        - name: MB_DB_USER
+          valueFrom:
+            configMapKeyRef:
+              key: MB_DB_USER
+              name: metabase-env
+        image: metabase/metabase
+        imagePullPolicy: ""
+        name: metabase
+        ports:
+        - containerPort: 3000
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+

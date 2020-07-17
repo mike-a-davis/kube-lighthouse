@@ -1,0 +1,139 @@
+{
+  "type": "kafka",
+  "ioConfig": {
+    "type": "kafka",
+    "consumerProperties": {
+      "bootstrap.servers": "kafka-service:9092",
+      "ssl.protocol": "PLAINTEXT"
+    },
+    "topic": "vsphere_metrics",
+    "inputFormat": {
+      "type": "json"
+    },
+    "useEarliestOffset": true
+  },
+  "tuningConfig": {
+    "type": "kafka"
+  },
+  "dataSchema": {
+    "dataSource": "vsphere_metrics",
+    "granularitySpec": {
+      "type": "uniform",
+      "queryGranularity": "NONE",
+      "segmentGranularity": "HOUR",
+      "rollup": false
+    },
+    "timestampSpec": {
+      "column": "timestamp",
+      "format": "millis"
+    },
+    "dimensionsSpec": {
+      "dimensions": [
+        {
+          "type": "long",
+          "name": "bytesRx_average"
+        },
+        {
+          "type": "long",
+          "name": "bytesTx_average"
+        },
+        {
+          "type": "long",
+          "name": "connect_ns"
+        },
+        {
+          "type": "long",
+          "name": "coreUtilization_average"
+        },
+        {
+          "type": "long",
+          "name": "costop_summation"
+        },
+        {
+          "type": "long",
+          "name": "demand_average"
+        },
+        {
+          "type": "long",
+          "name": "discover_ns"
+        },
+        {
+          "type": "long",
+          "name": "discovered_objects"
+        },
+        "esxhostname",
+        {
+          "type": "long",
+          "name": "gather_count"
+        },
+        {
+          "type": "long",
+          "name": "gather_duration_ns"
+        },
+        {
+          "type": "long",
+          "name": "gather_time_ns"
+        },
+        "guest",
+        "host",
+        {
+          "type": "long",
+          "name": "idle_summation"
+        },
+        "input",
+        "interface",
+        {
+          "type": "long",
+          "name": "latency_average"
+        },
+        "metric",
+        {
+          "type": "long",
+          "name": "metrics_gathered"
+        },
+        "moid",
+        "os",
+        {
+          "type": "long",
+          "name": "read_average"
+        },
+        {
+          "type": "long",
+          "name": "readiness_average"
+        },
+        {
+          "type": "long",
+          "name": "ready_summation"
+        },
+        "resourcetype",
+        {
+          "type": "long",
+          "name": "run_summation"
+        },
+        "source",
+        {
+          "type": "long",
+          "name": "usage_average"
+        },
+        {
+          "type": "long",
+          "name": "used_summation"
+        },
+        {
+          "type": "long",
+          "name": "utilization_average"
+        },
+        "vcenter",
+        "vmname",
+        {
+          "type": "long",
+          "name": "wait_summation"
+        },
+        {
+          "type": "long",
+          "name": "write_average"
+        }
+      ]
+    }
+  }
+}

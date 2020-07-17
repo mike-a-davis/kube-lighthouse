@@ -1,0 +1,53 @@
+{
+  "type": "kafka",
+  "ioConfig": {
+    "type": "kafka",
+    "consumerProperties": {
+      "bootstrap.servers": "kafka-service:9092",
+      "ssl.protocol": "PLAINTEXT"
+    },
+    "topic": "druid_metrics",
+    "inputFormat": {
+      "type": "json"
+    },
+    "useEarliestOffset": true
+  },
+  "tuningConfig": {
+    "type": "kafka"
+  },
+  "dataSchema": {
+    "dataSource": "druid_metrics",
+    "granularitySpec": {
+      "type": "uniform",
+      "queryGranularity": "NONE",
+      "segmentGranularity": "HOUR",
+      "rollup": false
+    },
+    "timestampSpec": {
+      "column": "timestamp",
+      "format": "iso"
+    },
+    "dimensionsSpec": {
+      "dimensions": [
+        "dataSource",
+        "feed",
+        "host",
+        "id",
+        "metric",
+        "nativeQueryIds",
+        "remoteAddress",
+        "server",
+        "service",
+        "success",
+        "taskId",
+        "taskType",
+        "tier",
+        {
+          "type": "long",
+          "name": "value"
+        },
+        "version"
+      ]
+    }
+  }
+}
