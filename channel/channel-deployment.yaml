@@ -2,26 +2,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: harbor
-  name: harbor
+    app: channel
+  name: channel
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: harbor
+      app: channel
   template:
     metadata:
       labels:
-        app: harbor
+        app: channel
     spec:
       containers:
       - env:
-        image: drunknmster/harbor:latest
+        image: drunknmster/channel:latest
         imagePullPolicy: ""
-        name: harbor
+        name: channel
         ports:
         - containerPort: 8080
-        resources: {}
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1"
       restartPolicy: Always
       serviceAccountName: ""
       volumes: null
